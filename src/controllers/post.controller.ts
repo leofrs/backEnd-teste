@@ -7,12 +7,10 @@ export class PostController {
     async getAllPosts(req: Request, res: Response) {
         try {
             const get = await prismaPost.getAllPosts();
-            if (get) {
+            if (get && get.length > 0) {
                 res.status(200).json(get);
             } else {
-                res.status(301).json(
-                    "Um erro foi detectado ao buscar todos os posts. Tente novamente mais tarde"
-                );
+                res.status(301).json([]);
             }
         } catch (error) {
             res.status(501).json(`Error interno encontrado: ${error}`);
